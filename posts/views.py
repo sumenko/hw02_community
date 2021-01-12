@@ -13,6 +13,6 @@ def index(request):
 def group_posts(request, slug=None):
     # Получаем объект из базы соответствующий slug
     group = get_object_or_404(Group, slug=slug)
-    # Получаем все посты принадлежащие slug
-    posts = Post.objects.filter(group=group).all()[:12]
+    # Получаем все посты принадлежащие slug через related_name
+    posts = group.posts.all()[:12]
     return render(request, "group.html", {"group": group, "posts": posts})
