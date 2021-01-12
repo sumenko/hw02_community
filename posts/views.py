@@ -1,18 +1,18 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
+# from django.http import HttpResponse
 
-from .models import Post
-# Create your views here.
+from .models import Post, Group
+
 
 def index(request):
-    latest = Post.objects.all() #.order_by('-pub_date')[:10]
-    # собираем тексты постов в один, разделяя новой строкой
-    # output = [item.text for item in latest]
-    # return HttpResponse("<br><br>\n".join(output))
-
+    """ Вывод последних 10 постов из базы """
+    latest = Post.objects.order_by('-pub_date')[:10]
     return render(request, "index.html", {"posts": latest})
 
-def group_posts(request, slug=None, path=None):
 
-    
-    pass
+def group_posts(request, slug=None):
+    # Получаем объект из базы соответствующий slug
+    group = get_object_or_404(Group, slug=slug)
+    # Получаем все посты принадлежащие slug
+    posts = Post.objects.filter(group=group).order_by("-pub_date")[:12]
+    return render(request, "group.html", {"group": group, "posts": posts})
