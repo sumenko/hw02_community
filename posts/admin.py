@@ -5,19 +5,18 @@ from .models import Post, Group
 
 
 class PostAdmin(admin.ModelAdmin):
-    """ Перечисляем поля для отображения в таблице """
+    # Перечисляем поля для отображения в таблице
     list_display = ("pk", "text", "pub_date", "author", "group")
-    """ Перечисляем поля по которым можно будет искать  """
+    # Перечисляем поля по которым можно будет искать
     search_fields = ("text", "group")
-    """ фильтр """
-    # Правильно понимаю, не стоит добавлять "group", "author"?
+    # фильтр
     list_filter = ("pub_date",)
-    """ если пусое значение то... """
+    # если пусое значение то...
     empty_value_display = "-пусто-"
 
 
 class GroupAdmin(admin.ModelAdmin):
-    """ Аналогичный настройки админки для сообществ """
+    # Аналогичный настройки админки для сообществ
     list_display = ("pk", "title", "slug", "description")
     search_fields = ("title", "description")
     empty_value = "-пусто-"
